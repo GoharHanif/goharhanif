@@ -1,0 +1,1371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gohar Hanif — Import & Procurement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#000000;
+    --black-rich:#050505;
+    --black-card:#0e0e0e;
+    --black-elevated:#161616;
+    --black-surface:#1c1c1c;
+    --gold:#c9a84c;
+    --gold-bright:#e4c76b;
+    --gold-glow:#d4af37;
+    --gold-dim:rgba(201,168,76,0.15);
+    --white:#ffffff;
+    --white-soft:#f0f0f0;
+    --gray:#8a8a8a;
+    --gray-dim:#5a5a5a;
+    --line: rgba(201,168,76,0.18);
+    --line-subtle: rgba(255,255,255,0.06);
+    --radius: 2px;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+
+  body{
+    background:var(--black);
+    color:var(--white);
+    font-family:'Inter', -apple-system, sans-serif;
+    font-size:15px;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+  }
+
+  h1,h2,h3{
+    font-family:'Playfair Display', Georgia, serif;
+    font-weight:500;
+    letter-spacing:-0.02em;
+    line-height:1.15;
+  }
+
+  a{ color:inherit; }
+
+  .mono{
+    font-family:'JetBrains Mono', monospace;
+  }
+
+  .wrap{
+    max-width:1100px;
+    margin:0 auto;
+    padding:0 36px;
+  }
+
+  section{
+    padding:100px 0;
+    position:relative;
+  }
+  section::after{
+    content:"";
+    position:absolute;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(80%, 900px);
+    height:1px;
+    background:linear-gradient(90deg, transparent, var(--line), transparent);
+  }
+  section:last-of-type::after{ display:none; }
+
+  .eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:16px;
+    display:block;
+  }
+
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:24px;
+    margin-bottom:52px;
+    flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-size:clamp(28px, 3.6vw, 42px);
+    background:linear-gradient(135deg, var(--white) 0%, var(--gray) 100%);
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+    background-clip:text;
+  }
+  .section-num{
+    font-family:'JetBrains Mono', monospace;
+    color:var(--gray-dim);
+    font-size:12px;
+    letter-spacing:0.05em;
+  }
+
+  /* ─── NAV ─── */
+  header.site-nav{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:100;
+    background:rgba(0,0,0,0.85);
+    backdrop-filter:blur(20px) saturate(1.8);
+    -webkit-backdrop-filter:blur(20px) saturate(1.8);
+    border-bottom:1px solid var(--line-subtle);
+  }
+  .nav-inner{
+    max-width:1100px;
+    margin:0 auto;
+    padding:0 36px;
+    height:64px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .brand{
+    font-family:'Playfair Display', serif;
+    font-size:18px;
+    font-weight:600;
+    display:flex;
+    align-items:center;
+    gap:12px;
+    letter-spacing:-0.01em;
+  }
+  .brand .mark{
+    width:34px; height:34px;
+    border:1.5px solid var(--gold);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    font-weight:500;
+    color:var(--gold);
+    transition:all 0.3s ease;
+  }
+  .brand:hover .mark{
+    background:var(--gold);
+    color:var(--black);
+  }
+  nav.links{
+    display:flex;
+    gap:28px;
+    font-size:13px;
+    font-weight:400;
+    letter-spacing:0.01em;
+  }
+  nav.links a{
+    text-decoration:none;
+    color:var(--gray);
+    transition:color 0.25s ease;
+    padding:4px 0;
+    position:relative;
+  }
+  nav.links a::after{
+    content:"";
+    position:absolute;
+    bottom:-2px; left:0;
+    width:0; height:1px;
+    background:var(--gold);
+    transition:width 0.3s ease;
+  }
+  nav.links a:hover, nav.links a:focus-visible{
+    color:var(--white);
+    outline:none;
+  }
+  nav.links a:hover::after, nav.links a:focus-visible::after{
+    width:100%;
+  }
+  .nav-toggle{
+    display:none;
+    background:none; border:1px solid var(--line-subtle); color:var(--white);
+    width:40px; height:40px; border-radius:var(--radius);
+    cursor:pointer;
+    font-size:18px;
+  }
+
+  /* ─── HERO ─── */
+  .hero{
+    padding-top:160px;
+    padding-bottom:100px;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";
+    position:absolute;
+    top:-100px; right:-200px;
+    width:600px; height:600px;
+    background:radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .hero::after{
+    content:"";
+    position:absolute;
+    bottom:0;
+    left:50%;
+    transform:translateX(-50%);
+    width:min(80%, 900px);
+    height:1px;
+    background:linear-gradient(90deg, transparent, var(--line), transparent);
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1.15fr 1fr;
+    gap:64px;
+    align-items:center;
+  }
+  .hero h1{
+    font-size:clamp(42px, 6vw, 68px);
+    line-height:1.04;
+    margin-bottom:20px;
+    font-weight:600;
+  }
+  .hero .role{
+    color:var(--gold-bright);
+    font-size:clamp(15px,1.8vw,18px);
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:400;
+    margin-bottom:24px;
+    max-width:46ch;
+  }
+  .hero p.lede{
+    color:var(--gray);
+    max-width:52ch;
+    font-size:15px;
+    margin-bottom:40px;
+    line-height:1.7;
+  }
+  .hero-cta{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+  }
+  .btn{
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    letter-spacing:0.04em;
+    padding:14px 28px;
+    border-radius:var(--radius);
+    text-decoration:none;
+    display:inline-block;
+    transition:all 0.3s ease;
+    border:1px solid transparent;
+    text-transform:uppercase;
+  }
+  .btn-primary{
+    background:var(--gold);
+    color:var(--black);
+    font-weight:500;
+  }
+  .btn-primary:hover{
+    background:var(--gold-bright);
+    box-shadow:0 0 30px rgba(201,168,76,0.25);
+  }
+  .btn-ghost{
+    border:1px solid var(--line);
+    color:var(--white-soft);
+  }
+  .btn-ghost:hover{
+    border-color:var(--gold);
+    color:var(--gold-bright);
+    background:rgba(201,168,76,0.05);
+  }
+
+  /* ─── MANIFEST CARD ─── */
+  .manifest{
+    background:var(--black-card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:30px 28px;
+    opacity:0;
+    transform:translateY(16px);
+    animation:rise 0.8s ease 0.2s forwards;
+    position:relative;
+  }
+  .manifest::before{
+    content:"";
+    position:absolute;
+    inset:-1px;
+    border-radius:var(--radius);
+    padding:1px;
+    background:linear-gradient(160deg, var(--gold-dim), transparent 50%);
+    -webkit-mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask:linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    pointer-events:none;
+  }
+  @keyframes rise{ to{ opacity:1; transform:translateY(0); } }
+  .manifest-top{
+    display:flex;
+    justify-content:space-between;
+    border-bottom:1px solid var(--line-subtle);
+    padding-bottom:14px;
+    margin-bottom:20px;
+  }
+  .manifest-top span{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.1em;
+    color:var(--gray-dim);
+    text-transform:uppercase;
+  }
+  .manifest-field{ margin-bottom:18px; }
+  .manifest-field label{
+    display:block;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.1em;
+    color:var(--gray-dim);
+    margin-bottom:5px;
+    text-transform:uppercase;
+  }
+  .manifest-field .val{ font-size:14px; color:var(--white-soft); }
+
+  .route{
+    margin-top:24px;
+    padding-top:22px;
+    border-top:1px solid var(--line-subtle);
+  }
+  .route-line{
+    position:relative;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin:14px 0 8px;
+  }
+  .route-line svg{ width:100%; height:24px; position:absolute; top:50%; transform:translateY(-50%); left:0; }
+  .route-line .pt{
+    width:8px; height:8px; border-radius:50%;
+    background:var(--gold);
+    z-index:1;
+    box-shadow:0 0 0 3px var(--black-card), 0 0 12px rgba(201,168,76,0.3);
+  }
+  .route-labels{
+    display:flex; justify-content:space-between;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    color:var(--gray-dim);
+    letter-spacing:0.04em;
+  }
+  .route-labels strong{ color:var(--white-soft); font-weight:500; }
+
+  .path-draw{
+    stroke-dasharray:400;
+    stroke-dashoffset:400;
+    animation:draw 1.6s ease 0.5s forwards;
+  }
+  @keyframes draw{ to{ stroke-dashoffset:0; } }
+
+  .incoterm-chips{
+    display:flex; flex-wrap:wrap; gap:6px; margin-top:18px;
+  }
+  .chip{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    padding:5px 10px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    color:var(--gold);
+    letter-spacing:0.05em;
+    transition:all 0.2s ease;
+  }
+  .chip:hover{
+    background:var(--gold-dim);
+    border-color:var(--gold);
+  }
+
+  /* ─── ABOUT ─── */
+  .about-grid{
+    display:grid;
+    grid-template-columns: 240px 1fr;
+    gap:52px;
+  }
+  .about-left{
+    display:flex;
+    flex-direction:column;
+    gap:32px;
+  }
+  .profile-photo{
+    width:200px;
+    height:200px;
+    border-radius:50%;
+    object-fit:cover;
+    object-position:center top;
+    border:2px solid var(--gold);
+    box-shadow:0 0 40px rgba(201,168,76,0.15);
+    display:block;
+  }
+  .about-grid p{ color:var(--gray); max-width:64ch; margin-bottom:18px; }
+  .about-stats{
+    display:flex; flex-direction:column; gap:24px;
+  }
+  .about-stats .stat-n{
+    font-family:'Playfair Display', serif;
+    font-size:34px;
+    font-weight:600;
+    color:var(--gold);
+  }
+  .about-stats .stat-l{
+    font-size:11px;
+    color:var(--gray-dim);
+    margin-top:4px;
+    letter-spacing:0.02em;
+  }
+
+  /* ─── EXPERIENCE TIMELINE ─── */
+  .timeline{
+    position:relative;
+    padding-left:32px;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:3px; top:8px; bottom:8px;
+    width:1px;
+    background:linear-gradient(180deg, var(--gold), var(--line-subtle));
+  }
+  .tl-item{
+    position:relative;
+    padding-bottom:56px;
+  }
+  .tl-item:last-child{ padding-bottom:0; }
+  .tl-item::before{
+    content:"";
+    position:absolute;
+    left:-32px; top:6px;
+    width:7px; height:7px;
+    border-radius:50%;
+    background:var(--gold);
+    box-shadow:0 0 0 3px var(--black), 0 0 12px rgba(201,168,76,0.2);
+  }
+  .tl-date{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    color:var(--gold);
+    margin-bottom:10px;
+    display:block;
+    letter-spacing:0.04em;
+  }
+  .tl-item h3{
+    font-size:20px;
+    margin-bottom:4px;
+    color:var(--white);
+  }
+  .tl-item .org{
+    color:var(--gray);
+    font-size:13px;
+    margin-bottom:18px;
+    display:block;
+  }
+  .tl-item ul{
+    padding-left:18px;
+    color:var(--gray);
+    font-size:14px;
+    list-style:none;
+  }
+  .tl-item li{
+    margin-bottom:10px;
+    position:relative;
+    padding-left:14px;
+  }
+  .tl-item li::before{
+    content:"›";
+    position:absolute;
+    left:0;
+    color:var(--gold);
+    font-weight:600;
+  }
+
+  /* ─── SKILLS ─── */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:var(--line-subtle);
+    border:1px solid var(--line-subtle);
+  }
+  .skill-cat{
+    background:var(--black);
+    padding:28px 24px;
+    transition:background 0.3s ease;
+  }
+  .skill-cat:hover{
+    background:var(--black-card);
+  }
+  .skill-cat h3{
+    font-size:14px;
+    font-family:'Inter',sans-serif;
+    font-weight:600;
+    color:var(--gold);
+    margin-bottom:16px;
+    letter-spacing:0.01em;
+  }
+  .skill-cat ul{ list-style:none; }
+  .skill-cat li{
+    font-size:13px;
+    color:var(--gray);
+    padding:7px 0;
+    border-top:1px solid var(--line-subtle);
+  }
+  .skill-cat li:first-child{ border-top:none; }
+
+  .incoterms-strip{
+    margin-top:44px;
+    padding-top:32px;
+    border-top:1px solid var(--line-subtle);
+  }
+  .incoterms-strip label{
+    display:block;
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    color:var(--gray-dim);
+    letter-spacing:0.1em;
+    margin-bottom:14px;
+    text-transform:uppercase;
+  }
+
+  /* ─── ACHIEVEMENTS ─── */
+  .ach-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+  }
+  .ach-card{
+    border:1px solid var(--line-subtle);
+    border-radius:var(--radius);
+    padding:28px 22px;
+    transition:all 0.3s ease;
+    background:var(--black);
+  }
+  .ach-card:hover{
+    border-color:var(--gold);
+    background:var(--black-card);
+    box-shadow:0 0 30px rgba(201,168,76,0.08);
+  }
+  .ach-card .n{
+    font-family:'Playfair Display', serif;
+    font-size:28px;
+    font-weight:600;
+    color:var(--gold);
+    margin-bottom:12px;
+  }
+  .ach-card p{
+    font-size:13px;
+    color:var(--gray);
+  }
+
+  /* ─── PROJECTS ─── */
+  .proj-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:20px;
+  }
+  .proj-card{
+    border:1px solid var(--line-subtle);
+    border-radius:var(--radius);
+    padding:30px 26px;
+    display:flex;
+    flex-direction:column;
+    transition:all 0.3s ease;
+    background:var(--black);
+    position:relative;
+  }
+  .proj-card::before{
+    content:"";
+    position:absolute;
+    top:0; left:0;
+    width:0; height:2px;
+    background:linear-gradient(90deg, var(--gold), var(--gold-bright));
+    transition:width 0.4s ease;
+  }
+  .proj-card:hover::before{ width:100%; }
+  .proj-card:hover{
+    border-color:var(--line);
+    background:var(--black-card);
+    transform:translateY(-2px);
+  }
+  .proj-card .tag{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    color:var(--gold);
+    margin-bottom:14px;
+    letter-spacing:0.08em;
+  }
+  .proj-card h3{ font-size:18px; margin-bottom:10px; color:var(--white); }
+  .proj-card p{ color:var(--gray); font-size:13.5px; }
+
+  /* ─── EDUCATION ─── */
+  .edu-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:56px;
+  }
+  .edu-entry{ margin-bottom:28px; }
+  .edu-entry .deg{
+    font-family:'Playfair Display', serif;
+    font-size:18px;
+    margin-bottom:4px;
+    color:var(--white);
+  }
+  .edu-entry .inst{ color:var(--gray); font-size:13px; }
+  .cert-list{ list-style:none; }
+  .cert-list li{
+    padding:14px 0;
+    border-top:1px solid var(--line-subtle);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:16px;
+    font-size:13px;
+  }
+  .cert-list li:first-child{ border-top:none; }
+  .cert-list .cert-name{ color:var(--white-soft); }
+  .cert-list .cert-org{ color:var(--gray-dim); display:block; font-size:12px; margin-top:3px;}
+  .cert-list .cert-year{
+    font-family:'JetBrains Mono', monospace;
+    color:var(--gold);
+    font-size:11px;
+    white-space:nowrap;
+  }
+  .cert-list .cert-info{ flex:1; }
+  .cert-view-btn{
+    font-family:'JetBrains Mono', monospace;
+    font-size:10px;
+    letter-spacing:0.04em;
+    padding:6px 12px;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    background:none;
+    color:var(--gold);
+    cursor:pointer;
+    transition:all 0.2s ease;
+    white-space:nowrap;
+    text-transform:uppercase;
+  }
+  .cert-view-btn:hover{
+    background:var(--gold-dim);
+    border-color:var(--gold);
+  }
+
+  /* ─── CERTIFICATES GALLERY ─── */
+  .cert-gallery{
+    margin-top:52px;
+    padding-top:40px;
+    border-top:1px solid var(--line-subtle);
+  }
+  .cert-gallery-label{
+    font-family:'JetBrains Mono', monospace;
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin-bottom:20px;
+    display:block;
+  }
+  .cert-thumbs{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(180px, 1fr));
+    gap:14px;
+  }
+  .cert-thumb{
+    position:relative;
+    border:1px solid var(--line-subtle);
+    border-radius:var(--radius);
+    overflow:hidden;
+    cursor:pointer;
+    transition:all 0.3s ease;
+    aspect-ratio:4/3;
+  }
+  .cert-thumb:hover{
+    border-color:var(--gold);
+    box-shadow:0 0 20px rgba(201,168,76,0.1);
+    transform:translateY(-2px);
+  }
+  .cert-thumb img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+    transition:transform 0.3s ease;
+  }
+  .cert-thumb:hover img{
+    transform:scale(1.03);
+  }
+  .cert-thumb-label{
+    position:absolute;
+    bottom:0; left:0; right:0;
+    background:linear-gradient(transparent, rgba(0,0,0,0.85));
+    padding:20px 10px 8px;
+    font-family:'JetBrains Mono', monospace;
+    font-size:9px;
+    color:var(--white-soft);
+    letter-spacing:0.03em;
+  }
+
+  /* ─── LIGHTBOX ─── */
+  .lightbox{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:1000;
+    background:rgba(0,0,0,0.92);
+    backdrop-filter:blur(10px);
+    align-items:center;
+    justify-content:center;
+    padding:40px;
+    cursor:pointer;
+  }
+  .lightbox.active{
+    display:flex;
+  }
+  .lightbox img{
+    max-width:90vw;
+    max-height:85vh;
+    object-fit:contain;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    box-shadow:0 0 60px rgba(201,168,76,0.15);
+    cursor:default;
+  }
+  .lightbox-close{
+    position:absolute;
+    top:24px; right:32px;
+    width:44px; height:44px;
+    border:1px solid var(--line-subtle);
+    border-radius:50%;
+    background:rgba(0,0,0,0.6);
+    color:var(--white);
+    font-size:20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:all 0.2s ease;
+  }
+  .lightbox-close:hover{
+    border-color:var(--gold);
+    color:var(--gold);
+  }
+  .lightbox-caption{
+    position:absolute;
+    bottom:24px;
+    left:50%;
+    transform:translateX(-50%);
+    font-family:'JetBrains Mono', monospace;
+    font-size:12px;
+    color:var(--gray);
+    background:rgba(0,0,0,0.7);
+    padding:8px 20px;
+    border-radius:var(--radius);
+    white-space:nowrap;
+  }
+
+  /* ─── CONTACT ─── */
+  .contact-panel{
+    background:var(--black-card);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:56px 52px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:44px;
+    align-items:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .contact-panel::before{
+    content:"";
+    position:absolute;
+    top:-80px; left:-80px;
+    width:300px; height:300px;
+    background:radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .contact-panel h2{
+    font-size:clamp(26px,3.4vw,36px);
+    margin-bottom:14px;
+    color:var(--white);
+  }
+  .contact-panel p{ color:var(--gray); max-width:42ch; }
+  .contact-links{ display:flex; flex-direction:column; gap:0; }
+  .contact-links a{
+    text-decoration:none;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:18px 0;
+    border-bottom:1px solid var(--line-subtle);
+    font-size:14px;
+    transition:all 0.25s ease;
+    color:var(--white-soft);
+  }
+  .contact-links a:first-child{ border-top:1px solid var(--line-subtle); }
+  .contact-links a:hover{
+    color:var(--gold-bright);
+    padding-left:8px;
+  }
+  .contact-links label{
+    font-family:'JetBrains Mono', monospace;
+    color:var(--gray-dim);
+    font-size:10px;
+    letter-spacing:0.08em;
+  }
+
+  /* ─── VENTURE ─── */
+  #venture .contact-panel{
+    grid-template-columns:1fr;
+    padding:42px 48px;
+  }
+
+  /* ─── DOWNLOAD CV ─── */
+  .download-cv{
+    margin-top:20px;
+  }
+
+  footer{
+    padding:36px 0 52px;
+    text-align:center;
+    color:var(--gray-dim);
+    font-size:12px;
+    font-family:'JetBrains Mono', monospace;
+    letter-spacing:0.03em;
+  }
+  footer .langs{ margin-top:8px; color:var(--gray-dim); opacity:0.5; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width:900px){
+    .hero-grid{ grid-template-columns:1fr; }
+    .about-grid{ grid-template-columns:1fr; }
+    .about-left{ flex-direction:row; align-items:center; flex-wrap:wrap; gap:24px; }
+    .profile-photo{ width:140px; height:140px; }
+    .about-stats{ flex-direction:row; flex-wrap:wrap; gap:28px; }
+    .skills-grid{ grid-template-columns:1fr 1fr; }
+    .ach-grid{ grid-template-columns:1fr 1fr; }
+    .proj-grid{ grid-template-columns:1fr; }
+    .edu-grid{ grid-template-columns:1fr; gap:36px; }
+    .contact-panel{ grid-template-columns:1fr; padding:36px 28px; }
+    nav.links{ display:none; }
+    .nav-toggle{ display:block; }
+    .cert-thumbs{ grid-template-columns:repeat(auto-fill, minmax(140px, 1fr)); }
+  }
+  @media (max-width:900px){
+    nav.links.open{
+      display:flex;
+      position:absolute;
+      top:64px; left:0; right:0;
+      background:rgba(0,0,0,0.95);
+      backdrop-filter:blur(20px);
+      border-bottom:1px solid var(--line-subtle);
+      flex-direction:column;
+      padding:20px 36px 28px;
+      gap:16px;
+    }
+  }
+  @media (max-width:600px){
+    .wrap{ padding:0 20px; }
+    section{ padding:64px 0; }
+    .skills-grid{ grid-template-columns:1fr; }
+    .ach-grid{ grid-template-columns:1fr 1fr; }
+    .hero{ padding-top:130px; }
+    .profile-photo{ width:120px; height:120px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <div class="brand"><span class="mark">GH</span> Gohar Hanif</div>
+    <nav class="links" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#education">Education</a>
+      <a href="#achievements">Achievements</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <h1>Gohar Hanif</h1>
+      <p class="role">Import Operations Executive — Supply Chain, International Trade, LC & Import Documentation</p>
+      <p class="lede">Coordinating imports end to end — suppliers, banks, insurers, and freight forwarders — with hands-on LC handling, shipping documentation, and Odoo-based operations. Based in Karachi, Pakistan, and open to Import Operations & Supply Chain roles.</p>
+      <div class="hero-cta">
+        <a href="#experience" class="btn btn-primary">View Experience</a>
+        <a href="#contact" class="btn btn-ghost">Get in Touch</a>
+        <a href="images/IMPORT CV GOHAR HANIF.pdf" class="btn btn-ghost" download>↓ Download CV</a>
+      </div>
+    </div>
+
+    <div class="manifest">
+      <div class="manifest-top">
+        <span>SHIPPING MANIFEST</span>
+        <span>REF: GH-2026</span>
+      </div>
+      <div class="manifest-field">
+        <label>Shipper</label>
+        <div class="val">Gohar Hanif</div>
+      </div>
+      <div class="manifest-field">
+        <label>Commodity</label>
+        <div class="val">Import Operations & Supply Chain Coordination</div>
+      </div>
+      <div class="manifest-field">
+        <label>Base Port</label>
+        <div class="val">Karachi, Pakistan</div>
+      </div>
+
+      <div class="route">
+        <div class="route-labels">
+          <strong>Sourcing</strong>
+          <strong>Booking</strong>
+          <strong>Customs</strong>
+          <strong>Delivery</strong>
+        </div>
+        <div class="route-line">
+          <svg viewBox="0 0 320 24" preserveAspectRatio="none">
+            <line x1="4" y1="12" x2="316" y2="12" stroke="var(--gold)" stroke-width="1" class="path-draw" />
+          </svg>
+          <div class="pt"></div>
+          <div class="pt"></div>
+          <div class="pt"></div>
+          <div class="pt"></div>
+        </div>
+      </div>
+
+      <div class="incoterm-chips">
+        <span class="chip">EXW</span>
+        <span class="chip">FOB</span>
+        <span class="chip">CFR</span>
+        <span class="chip">CIF</span>
+        <span class="chip">DAP</span>
+        <span class="chip">DDP</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap about-grid">
+    <div class="about-left">
+      <img src="images/Profile_Photo.png" alt="Gohar Hanif — Profile Photo" class="profile-photo">
+      <div class="about-stats">
+        <div>
+          <div class="stat-n">4+</div>
+          <div class="stat-l">Years in import & procurement</div>
+        </div>
+        <div>
+          <div class="stat-n">100%</div>
+          <div class="stat-l">LC documentation accuracy</div>
+        </div>
+        <div>
+          <div class="stat-n">7</div>
+          <div class="stat-l">Incoterms applied in practice</div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <span class="eyebrow">About</span>
+      <h2 style="margin-bottom:22px;">Moving goods from supplier to shelf, without the surprises.</h2>
+      <p>Gohar works in import operations, managing the process from supplier coordination through to shipment and documentation. His hands-on experience spans import documentation, LC handling, shipping coordination, insurance, port handling, and customs — coordinating daily with suppliers, banks, insurance companies, freight forwarders, and shipping agents.</p>
+      <p>He works with the core documents that move a shipment — Bill of Lading, Packing List, Commercial Invoice — and runs import operations through Odoo. That vantage point across the process has given him a clear picture of how sourcing, freight, finance, and compliance connect on any given shipment.</p>
+      <p>He's currently open to Import Operations, Import Executive, or Supply Chain opportunities in Karachi.</p>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Experience</h2>
+      <span class="section-num mono">02 / Career</span>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <span class="tl-date">Feb 2023 — Present</span>
+        <h3>Import Coordinator</h3>
+        <span class="org">Mian Shafiq Business International</span>
+        <ul>
+          <li>Manage import documentation, including Bills of Lading, Packing Lists, and Commercial Invoices.</li>
+          <li>Coordinate with overseas suppliers, freight forwarders, banks, insurance companies, and shipping agents on every shipment.</li>
+          <li>Handle LC-related documentation and follow up on import payment processes, maintaining 100% documentation accuracy.</li>
+          <li>Coordinate shipment and port-related activities from documentation through to cargo clearance.</li>
+          <li>Follow up on Delivery Orders, IGM, shipping documents, and other import paperwork.</li>
+          <li>Coordinate with customs and relevant parties to support the import clearance process.</li>
+          <li>Maintain communication with suppliers and service providers to follow up on shipments and documents.</li>
+          <li>Run import operations and documentation through Odoo, and manage shipment/project insurance coordination.</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <span class="tl-date">Dec 2022 — Present</span>
+        <h3>Warranty & After-Sales Service Coordinator</h3>
+        <span class="org">MTAX Group of Companies — concurrent role within MSBI's parent group</span>
+        <ul>
+          <li>Managed end-to-end warranty and claims processing, ensuring timely resolution and policy compliance.</li>
+          <li>Acted as key point of contact between customers, vendors, and internal teams for after-sales service, liaising with vendors to source replacement stock efficiently.</li>
+          <li>Monitored stock and inventory levels against demand to keep parts and materials available for claims and service needs.</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <span class="tl-date">Nov 2022 — Feb 2023</span>
+        <h3>Import Intern</h3>
+        <span class="org">Mian Shafiq Business International</span>
+        <ul>
+          <li>Handled imports across suppliers, customs, and the Sales Tax/Excise Department, working with shipping companies on tariffs, landed cost, and related paperwork.</li>
+        </ul>
+      </div>
+      <div class="tl-item">
+        <span class="tl-date">Dec 2020 — Oct 2022</span>
+        <h3>Insurance Agent, USA Programs (Team Lead)</h3>
+        <span class="org">AMIGOSE BPO</span>
+        <ul>
+          <li>Worked as a vehicle insurance agent, Medicare insurance agent, and F.I. insurance agent for US-based programs.</li>
+          <li>Stepped up as team lead, supporting a group of agents on quality and performance.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="venture">
+  <div class="wrap">
+    <div class="contact-panel">
+      <div>
+        <span class="eyebrow" style="margin-bottom:10px;">Also building</span>
+        <h2 style="font-size:24px; margin-bottom:10px;">GTS — Gohar Trade Sphere</h2>
+        <p style="max-width:70ch;">A self-founded, part-time venture — not an employer — where Gohar serves as CEO since January 2025. GTS delivers graphic design & branding, e-commerce solutions, banners, logos, and social media content & marketing, alongside his full-time import operations work.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Skills</h2>
+      <span class="section-num mono">03 / Capabilities</span>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-cat">
+        <h3>Procurement & Sourcing</h3>
+        <ul>
+          <li>International procurement (direct & indirect)</li>
+          <li>Vendor sourcing & quotation evaluation</li>
+          <li>Negotiation</li>
+          <li>Vendor ledger reconciliation</li>
+        </ul>
+      </div>
+      <div class="skill-cat">
+        <h3>Freight & Logistics Ops</h3>
+        <ul>
+          <li>Sea & air freight shipment management</li>
+          <li>Booking & vessel/flight scheduling</li>
+          <li>Customs & port/terminal coordination</li>
+          <li>Freight cost & demurrage/detention control</li>
+          <li>Forwarder & clearing agent coordination</li>
+        </ul>
+      </div>
+      <div class="skill-cat">
+        <h3>Trade Docs & Compliance</h3>
+        <ul>
+          <li>Commercial Invoice, Packing List, B/L, AWB</li>
+          <li>Letters of Credit & bank liaison</li>
+          <li>Regulatory & customs compliance</li>
+          <li>Insurance coordination</li>
+        </ul>
+      </div>
+      <div class="skill-cat">
+        <h3>Tools & Systems</h3>
+        <ul>
+          <li>Odoo — import operations & documentation</li>
+          <li>ERP systems</li>
+          <li>MS Excel — costing, tracking, reporting</li>
+          <li>FreeHand & Project</li>
+          <li>Documentation control</li>
+          <li>Process improvement & SOP</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="incoterms-strip">
+      <label>Incoterms applied</label>
+      <div class="incoterm-chips">
+        <span class="chip">EXW</span>
+        <span class="chip">FCA</span>
+        <span class="chip">FOB</span>
+        <span class="chip">CFR</span>
+        <span class="chip">CIF</span>
+        <span class="chip">DAP</span>
+        <span class="chip">DDP</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Key Initiatives</h2>
+      <span class="section-num mono">04 / Projects</span>
+    </div>
+    <div class="proj-grid">
+      <div class="proj-card">
+        <span class="tag">LC & BANK LIAISON</span>
+        <h3>Zero-error LC documentation</h3>
+        <p>Owned LC processing and amendments end to end, holding documentation to 100% accuracy and keeping every shipment clear of delay penalties.</p>
+      </div>
+      <div class="proj-card">
+        <span class="tag">COST OPTIMIZATION</span>
+        <h3>Vendor & freight rate comparison</h3>
+        <p>Ran structured quotation comparisons across suppliers and forwarders, negotiating rates that measurably reduced logistics and procurement spend.</p>
+      </div>
+      <div class="proj-card">
+        <span class="tag">AFTER-SALES OPS</span>
+        <h3>Warranty & claims coordination</h3>
+        <p>Built a working line between customers, vendors, and internal teams at MTAX Group, sourcing replacement stock and keeping inventory aligned to claim demand.</p>
+      </div>
+      <div class="proj-card">
+        <span class="tag">ODOO & DOCUMENTATION</span>
+        <h3>End-to-end shipment paperwork</h3>
+        <p>Runs Delivery Orders, IGM, and import documentation through Odoo, keeping suppliers, banks, and shipping agents aligned from booking through to cargo clearance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="achievements">
+  <div class="wrap">
+    <div class="section-head">
+      <h2>Achievements</h2>
+      <span class="section-num mono">05 / Track Record</span>
+    </div>
+    <div class="ach-grid">
+      <div class="ach-card">
+        <div class="n">100%</div>
+        <p>LC documentation accuracy, avoiding delays and penalties</p>
+      </div>
+      <div class="ach-card">
+        <div class="n">Multi-shipment</div>
+        <p>Sea & air shipments run simultaneously with on-time delivery</p>
+      </div>
+      <div class="ach-card">
+        <div class="n">Cost down</div>
+        <p>Logistics & procurement costs reduced through negotiation</p>
+      </div>
+      <div class="ach-card">
+        <div class="n">SOP-led</div>
+        <p>Process efficiency improved via documentation & tracking systems</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="edu-grid">
+      <div>
+        <span class="eyebrow">Education</span>
+        <div class="edu-entry">
+          <div class="deg">BS, Artificial Intelligence & Digital Media</div>
+          <div class="inst">Iqra University, Karachi — 2025–2028 (in progress)</div>
+        </div>
+        <div class="edu-entry">
+          <div class="deg">HSSC, Pre-Engineering</div>
+          <div class="inst">Iqra Intermediate College, Orangi Town, Karachi — 2021–2023</div>
+        </div>
+        <div class="edu-entry">
+          <div class="deg">Intermediate, Pre-Medical</div>
+          <div class="inst">Avicenna Science College, Muzaffarabad — 2019–2021</div>
+        </div>
+        <div class="edu-entry" style="margin-bottom:0;">
+          <div class="deg">SSC, Science</div>
+          <div class="inst">Haveli Model Science College — 2017–2019</div>
+        </div>
+      </div>
+      <div>
+        <span class="eyebrow">Certifications</span>
+        <ul class="cert-list">
+          <li>
+            <span class="cert-info"><span class="cert-name">Basics of Lean Thinking & Six Sigma in Supply Chain</span><span class="cert-org">UniAthena, with Cambridge International Qualifications UK</span></span>
+            <button class="cert-view-btn" onclick="openLightbox('images/Certificate-Basics of Lean Thinking & Six Sigma.jpg', 'Lean Thinking & Six Sigma — Certificate')">View</button>
+            <span class="cert-year mono">2026</span>
+          </li>
+          <li>
+            <span class="cert-info"><span class="cert-name">Basics of Sustainable Supply Chain</span><span class="cert-org">UniAthena, with Cambridge International Qualifications UK</span></span>
+            <button class="cert-view-btn" onclick="openLightbox('images/Certificate-Basics of Sustainable Supply Chain.jpg', 'Sustainable Supply Chain — Certificate')">View</button>
+            <span class="cert-year mono">2026</span>
+          </li>
+          <li>
+            <span class="cert-info"><span class="cert-name">Essentials of MS Excel — Formulas and Functions</span><span class="cert-org">UniAthena, with Cambridge International Qualifications UK</span></span>
+            <button class="cert-view-btn" onclick="openLightbox('images/Certificate-Essentials of MS Excel - Formulas.jpg', 'MS Excel Essentials — Certificate')">View</button>
+            <span class="cert-year mono">2026</span>
+          </li>
+          <li>
+            <span class="cert-info"><span class="cert-name">AI Foundations</span><span class="cert-org">OpenAI</span></span>
+            <button class="cert-view-btn" onclick="openLightbox('images/certificate Course-AI Foundation.jpg', 'AI Foundations — Certificate')">View</button>
+            <span class="cert-year mono">2026</span>
+          </li>
+          <li>
+            <span class="cert-info"><span class="cert-name">Agents and Workflows</span><span class="cert-org">OpenAI</span></span>
+            <button class="cert-view-btn" onclick="openLightbox('images/certificate Course-Agents and Workflows.jpg', 'Agents and Workflows — Certificate')">View</button>
+            <span class="cert-year mono">2026</span>
+          </li>
+          <li>
+            <span class="cert-info"><span class="cert-name">Adobe Certified Associate — Graphic Design & Illustration</span><span class="cert-org">Intra Computer Training</span></span>
+            <span class="cert-year mono">2024</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Certificate Gallery -->
+    <div class="cert-gallery">
+      <span class="cert-gallery-label">Certificate Gallery</span>
+      <div class="cert-thumbs">
+        <div class="cert-thumb" onclick="openLightbox('images/Certificate-Basics of Lean Thinking & Six Sigma.jpg', 'Lean Thinking & Six Sigma')">
+          <img src="images/Certificate-Basics of Lean Thinking & Six Sigma.jpg" alt="Lean Thinking & Six Sigma Certificate" loading="lazy">
+          <div class="cert-thumb-label">Lean Thinking & Six Sigma</div>
+        </div>
+        <div class="cert-thumb" onclick="openLightbox('images/Certificate-Basics of Sustainable Supply Chain.jpg', 'Sustainable Supply Chain')">
+          <img src="images/Certificate-Basics of Sustainable Supply Chain.jpg" alt="Sustainable Supply Chain Certificate" loading="lazy">
+          <div class="cert-thumb-label">Sustainable Supply Chain</div>
+        </div>
+        <div class="cert-thumb" onclick="openLightbox('images/Certificate-Essentials of MS Excel - Formulas.jpg', 'MS Excel Essentials')">
+          <img src="images/Certificate-Essentials of MS Excel - Formulas.jpg" alt="MS Excel Essentials Certificate" loading="lazy">
+          <div class="cert-thumb-label">MS Excel Essentials</div>
+        </div>
+        <div class="cert-thumb" onclick="openLightbox('images/certificate Course-AI Foundation.jpg', 'AI Foundations — OpenAI')">
+          <img src="images/certificate Course-AI Foundation.jpg" alt="AI Foundations Certificate" loading="lazy">
+          <div class="cert-thumb-label">AI Foundations — OpenAI</div>
+        </div>
+        <div class="cert-thumb" onclick="openLightbox('images/certificate Course-Agents and Workflows.jpg', 'Agents & Workflows — OpenAI')">
+          <img src="images/certificate Course-Agents and Workflows.jpg" alt="Agents and Workflows Certificate" loading="lazy">
+          <div class="cert-thumb-label">Agents & Workflows — OpenAI</div>
+        </div>
+        <div class="cert-thumb" onclick="openLightbox('images/Transcript-Basics of Lean Thinking & Six Sigma.jpg', 'Lean Thinking — Transcript')">
+          <img src="images/Transcript-Basics of Lean Thinking & Six Sigma.jpg" alt="Lean Thinking Transcript" loading="lazy">
+          <div class="cert-thumb-label">Transcript — Lean Thinking</div>
+        </div>
+        <div class="cert-thumb" onclick="openLightbox('images/Transcript-Basics of Sustainable Supply Chain.jpg', 'Supply Chain — Transcript')">
+          <img src="images/Transcript-Basics of Sustainable Supply Chain.jpg" alt="Sustainable Supply Chain Transcript" loading="lazy">
+          <div class="cert-thumb-label">Transcript — Supply Chain</div>
+        </div>
+        <div class="cert-thumb" onclick="openLightbox('images/Transcript-Essentials of MS Excel - Formulas.jpg', 'MS Excel — Transcript')">
+          <img src="images/Transcript-Essentials of MS Excel - Formulas.jpg" alt="MS Excel Transcript" loading="lazy">
+          <div class="cert-thumb-label">Transcript — MS Excel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="contact-panel">
+      <div>
+        <h2>Let's move your next shipment.</h2>
+        <p>Open to Import Operations, Import Executive, or Supply Chain roles in Karachi — reach out if you're hiring.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:gorich7890@gmail.com">
+          <label class="mono">EMAIL</label>
+          gorich7890@gmail.com
+        </a>
+        <a href="tel:03315147119">
+          <label class="mono">PHONE</label>
+          0331-5147119
+        </a>
+        <a href="https://www.linkedin.com/in/gohar-hanif" target="_blank" rel="noopener">
+          <label class="mono">LINKEDIN</label>
+          linkedin.com/in/gohar-hanif
+        </a>
+        <a href="#" onclick="return false;" style="cursor:default;">
+          <label class="mono">LOCATION</label>
+          Karachi, Pakistan
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>Gohar Hanif — International Procurement & Import Logistics</div>
+  <div class="langs">Urdu · English · Hindko</div>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox(event)">✕</button>
+  <img id="lightboxImg" src="" alt="">
+  <div class="lightbox-caption" id="lightboxCaption"></div>
+</div>
+
+<script>
+  // Nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => {
+    const isOpen = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.classList.remove('open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  // Lightbox
+  function openLightbox(src, caption) {
+    const lb = document.getElementById('lightbox');
+    const img = document.getElementById('lightboxImg');
+    const cap = document.getElementById('lightboxCaption');
+    img.src = src;
+    img.alt = caption;
+    cap.textContent = caption;
+    lb.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox(e) {
+    if (e.target === document.getElementById('lightboxImg')) return;
+    document.getElementById('lightbox').classList.remove('active');
+    document.body.style.overflow = '';
+  }
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      document.getElementById('lightbox').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+  });
+</script>
+
+</# Step 1 � Initialise the folder as a Git project
+git init
+
+# Step 2 � Add all your portfolio files
+git add .
+
+# Step 3 � Save a snapshot with a message
+git commit -m "my portfolio"
+
+# Step 4 � Set the branch name to main
+git branch -M main
+
+# Step 5 � Push everything to GitHub
+git push -u origin mainbody>
+</html>
